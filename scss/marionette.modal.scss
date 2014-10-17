@@ -1,0 +1,41 @@
+@import "settings";
+
+.modal-overlay {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(#000, 0.4);
+    z-index: 1400;
+    display: none;
+}
+
+.modal {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: $modal-width;
+    margin: 0 auto;
+    max-width: $modal-max-width;
+    border-radius: 3px;
+    background-color: white;
+    z-index: 1488;
+    border: solid 1px #666;
+    box-shadow: 0 0 10px rgba(#000, 0.4);
+    padding: 1.5rem;
+    display: none;
+    opacity: 0;
+}
+
+.modal-close-button {
+    font-size: 2rem;
+    line-height: 1rem;
+    position: absolute;
+    top: 0.6rem;
+    right: 0.5rem;
+    color: #aaa;
+    font-weight: 600;
+    cursor: pointer;
+}
+

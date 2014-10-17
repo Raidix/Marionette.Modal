@@ -1,0 +1,184 @@
+(function (root, factory) {
+    'use strict';
+
+    if (typeof define === 'function' && define.amd) {
+        define(['backbone', 'underscore', 'marionette'], factory);
+    }
+    else {
+        root.Marionette.Modal = factory(root.Backbone, root._, root.Marionette);
+    }
+}(this, function (Backbone, _, Marionette) {
+    'use strict';
+
+    // control collection
+    var ModalCollection = Backbone.Collection.extend({
+        initialize: function () {
+            this.on('destroy', this.onDestroy);
+        },
+
+        getActive: function () {
+            return this.findWhere({ isActive: true });
+        },
+
+        hasActive: function () {
+            return this.some(function (model) {
+                return model.get('isActive');
+            });
+        },
+
+        onDestroy: function (model) {
+            var group = model.get('group');
+
+            if (group !== void 0) {
+                var models = this.where({ group: group });
+
+                this.remove(models);
+            }
+
+            this.reactivate();
+        },
+
+        reactivate: function () {
+            var model = this.last();
+
+            if (model !== void 0) {
+                model.set('isActive', true);
+            }
+        }
+    });
+
+    // overlay
+    var OverlayView = Marionette.ItemView.extend({
+        template: false,
+        el: '#modal-overlay',
+
+        events: {
+            'click': 'onClick'
+        },
+
+        toggle: function (state) {
+            if (state) {
+                return this.$el.fadeIn(200);
+            }
+
+            return this.$el.fadeOut(200);
+        },
+
+        onClick: function () {
+            this.trigger('click');
+        }
+    });
+
+    // modal
+    var ModalView = Marionette.LayoutView.extend({
+        template: _.template(
+            '<a class="modal-close-button">×</a>' +
+            '<div class="modal-content-region"></div>'
+        ),
+
+        events: {
+            'click .modal-close-button': 'onCloseModal'
+        },
+
+        className: 'modal',
+
+        modelEvents: {
+            'change:isActive': 'onChangeActive',
+            'close': 'onCloseModal'
+        },
+
+        regions: {
+            contentRegion: '.modal-content-region'
+        },
+
+        onRender: function () {
+            var View = this.model.get('View');
+
+            this.contentRegion.show(new View);
+            this.toggle(this.model.get('isActive'));
+        },
+
+        toggle: function (state) {
+            var self = this;
+            var offset = Backbone.$(window).scrollTop();
+
+            if (state) {
+                this.$el.show()
+                    .css({ top: offset + 'px' })
+                    .animate({ top: offset + 100 + 'px', opacity: 1 }, 200, 'linear');
+            }
+            else {
+                this.$el.animate({ top: offset + 'px', opacity: 0 }, 200, 'linear', function () {
+                    self.$el.hide();
+                });
+            }
+        },
+
+        onChangeActive: function (model, value) {
+            this.toggle(value);
+        },
+
+        onCloseModal: function () {
+            var self = this;
+            var offset = Backbone.$(window).scrollTop();
+
+            this.$el.animate({ top: offset + 'px', opacity: 0 }, 200, 'linear', function () {
+                self.model.destroy();
+            });
+        }
+    });
+
+    // modal container
+    var ModalContainer = Marionette.CollectionView.extend({
+        el: '#modal-container',
+        sort: false,
+        childView: ModalView
+    });
+
+    // constructor
+    var ModalController = function () {
+        // initialize overlay once
+        this.overlay = (new OverlayView).render();
+
+        this.collection = new ModalCollection;
+
+        this.container = new ModalContainer({
+            collection: this.collection
+        });
+
+        this.container.render();
+
+        this.listenTo(this.overlay, 'click', this.onClose);
+        this.listenTo(this.container, 'add:child remove:child', this.toggleOverlay);
+    };
+
+    // controller methods
+    _.extend(ModalController.prototype, Backbone.Events, {
+        add: function (item) {
+            if (item.isActive) {
+                this.collection.invoke('set', 'isActive', false);
+            }
+            else if (this.collection.length === 0) {
+                item.isActive = true;
+            }
+
+            this.collection.add(item);
+        },
+
+        onClose: function () {
+            var activeModal = this.collection.getActive();
+            console.log(activeModal);
+
+            if (activeModal !== void 0) {
+                activeModal.trigger('close');
+            }
+        },
+
+        toggleOverlay: function () {
+            this.overlay.toggle(this.collection.length > 0);
+        }
+    });
+
+    return new ModalController;
+}));
+
