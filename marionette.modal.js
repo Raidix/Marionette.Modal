@@ -10,8 +10,17 @@
 }(this, function (Backbone, _, Marionette) {
     'use strict';
 
+    // default model
+    var ModalModel = Backbone.Model.extend({
+        defaults: {
+            isActive: true
+        }
+    });
+
     // control collection
     var ModalCollection = Backbone.Collection.extend({
+        model: ModalModel,
+
         initialize: function () {
             this.on('destroy', this.onDestroy);
         },
@@ -72,19 +81,20 @@
     // modal
     var ModalView = Marionette.LayoutView.extend({
         template: _.template(
-            '<a class="modal-close-button">×</a>' +
+            '<a class="modal-close-button js-reject">×</a>' +
             '<div class="modal-content-region"></div>'
         ),
 
         events: {
-            'click .modal-close-button': 'onCloseModal'
+            'click .js-submit': 'onSubmit',
+            'click .js-reject': 'onReject'
         },
 
         className: 'modal',
 
         modelEvents: {
             'change:isActive': 'onChangeActive',
-            'close': 'onCloseModal'
+            'reject': 'onReject'
         },
 
         regions: {
@@ -118,7 +128,29 @@
             this.toggle(value);
         },
 
-        onCloseModal: function () {
+        onSubmit: function () {
+            var submitStatus = this.contentRegion.currentView.triggerMethod('submit');
+
+            // prevent closing if onSubmit method of child view returns "false"
+            if (submitStatus === false) {
+                return;
+            }
+
+            this.closeModal();
+        },
+
+        onReject: function () {
+            var cancelStatus = this.contentRegion.currentView.triggerMethod('reject');
+
+            // prevent closing if onReject method of child view returns "false"
+            if (cancelStatus === false) {
+                return;
+            }
+
+            this.closeModal();
+        },
+
+        closeModal: function () {
             var self = this;
             var offset = Backbone.$(window).scrollTop();
 
@@ -148,7 +180,7 @@
 
         this.container.render();
 
-        this.listenTo(this.overlay, 'click', this.onClose);
+        this.listenTo(this.overlay, 'click', this.onReject);
         this.listenTo(this.container, 'add:child remove:child', this.toggleOverlay);
     };
 
@@ -165,12 +197,11 @@
             this.collection.add(item);
         },
 
-        onClose: function () {
+        onReject: function () {
             var activeModal = this.collection.getActive();
-            console.log(activeModal);
 
             if (activeModal !== void 0) {
-                activeModal.trigger('close');
+                activeModal.trigger('reject');
             }
         },
 
@@ -181,4 +212,3 @@
 
     return new ModalController;
 }));
-
