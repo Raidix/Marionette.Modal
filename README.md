@@ -1,14 +1,14 @@
-Marionette.Modal
-================
+# Marionette.Modal
 
-Example
--------
+## Example
 
+### HTML
 ```html
 <body>
 
 <!-- so much html here -->
 
+<!-- required markup -->
 <div id="modal-container">
     <div id="modal-overlay" class="modal-overlay"></div>
 </div>
@@ -16,6 +16,7 @@ Example
 </body>
 ```
 
+### JavaScript
 ```javascript
 define(['backbone.marionette', 'marionette.modal'], function (Marionette, Modal) {
     // this is view will rendered inside modal dialog
