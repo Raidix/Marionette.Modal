@@ -13,7 +13,7 @@
     // default model
     var ModalModel = Backbone.Model.extend({
         defaults: {
-            isActive: true
+            isActive: false
         }
     });
 
@@ -80,17 +80,23 @@
 
     // modal
     var ModalView = Marionette.LayoutView.extend({
-        template: _.template(
-            '<a class="modal-close-button js-reject">×</a>' +
-            '<div class="modal-content-region"></div>'
-        ),
+        template: _.template('<div class="modal-content-region"></div>'),
 
         events: {
             'click .js-submit': 'onSubmit',
             'click .js-reject': 'onReject'
         },
 
-        className: 'modal',
+        className: function () {
+            var _className = 'modal';
+            var className = this.model.get('className');
+
+            if (_.isString(className)) {
+                _className += ' ' + className;
+            }
+
+            return _className;
+        },
 
         modelEvents: {
             'change:isActive': 'onChangeActive',
@@ -114,7 +120,7 @@
 
             if (state) {
                 this.$el.show()
-                    .css({ top: offset + 'px' })
+                    .css({ top: offset + 'px', opacity: 0 })
                     .animate({ top: offset + 100 + 'px', opacity: 1 }, 200, 'linear');
             }
             else {

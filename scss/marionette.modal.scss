@@ -18,22 +18,9 @@
     width: $modal-width;
     margin: 0 auto;
     max-width: $modal-max-width;
-    border-radius: 3px;
     background-color: white;
     z-index: 1488;
-    border: solid 1px #666;
-    box-shadow: 0 0 10px rgba(#000, 0.4);
     padding: 1.5rem;
     display: none;
     opacity: 0;
-}
-
-.modal-close-button {
-    font-size: 2rem;
-    line-height: 1rem;
-    position: absolute;
-    top: 0.6rem;
-    right: 0.5rem;
-    color: #aaa;
-    cursor: pointer;
 }
