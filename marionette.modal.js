@@ -135,6 +135,7 @@
         },
 
         onSubmit: function () {
+            var self = this;
             var submitStatus = this.contentRegion.currentView.triggerMethod('submit');
 
             // prevent closing if onSubmit method of child view returns "false"
@@ -142,7 +143,9 @@
                 return;
             }
 
-            this.closeModal();
+            Backbone.$.when(submitStatus).done(function () {
+                self.closeModal();
+            });
         },
 
         onReject: function () {
