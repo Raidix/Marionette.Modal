@@ -100,7 +100,8 @@
 
         modelEvents: {
             'change:isActive': 'onChangeActive',
-            'reject': 'onReject'
+            'reject': 'onReject',
+            'submit': 'onSubmit'
         },
 
         regions: {
@@ -178,6 +179,8 @@
 
     // constructor
     var ModalController = function () {
+        this._settings = {};
+
         // initialize overlay once
         this.overlay = (new OverlayView).render();
 
@@ -214,8 +217,33 @@
             }
         },
 
+        onSubmit: function () {
+            var activeModal = this.collection.getActive();
+
+            if (activeModal !== void 0) {
+                activeModal.trigger('submit');
+            }
+        },
+
         toggleOverlay: function () {
             this.overlay.toggle(this.collection.length > 0);
+        },
+
+        configure: function (settings) {
+            if (settings.EA) {
+                this._resetEvents(settings.EA);
+            }
+        },
+
+        _resetEvents: function (EA) {
+            if (this._settings.EA) {
+                this.stopListening(this._settings.EA);
+            }
+
+            this._settings.EA = EA;
+
+            this.listenTo(EA, 'submit', this.onSubmit);
+            this.listenTo(EA, 'reject', this.onReject);
         }
     });
 
