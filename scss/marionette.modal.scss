@@ -6,7 +6,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background: rgba(#000, 0.4);
+    background: rgba($overlay-background-color, $overlay-background-opacity);
     z-index: 1400;
     display: none;
 }
@@ -18,7 +18,7 @@
     width: $modal-width;
     margin: 0 auto;
     max-width: $modal-max-width;
-    background-color: white;
+    background-color: $modal-background-color;
     z-index: 1488;
     padding: 1.5rem;
     display: none;
