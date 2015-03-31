@@ -14,6 +14,10 @@
     var ModalModel = Backbone.Model.extend({
         defaults: {
             isActive: false
+        },
+
+        isNew: function () {
+            return true;
         }
     });
 
@@ -35,12 +39,20 @@
             });
         },
 
-        onDestroy: function (model) {
+        getGroup: function (model) {
             var group = model.get('group');
 
             if (group !== void 0) {
-                var models = this.where({ group: group });
+                return this.where({ group: group });
+            }
 
+            return [];
+        },
+
+        onDestroy: function (model) {
+            var models = this.getGroup(model);
+
+            if (models.length > 0) {
                 this.remove(models);
             }
 
@@ -59,6 +71,7 @@
     // overlay
     var OverlayView = Marionette.ItemView.extend({
         template: false,
+
         el: '#modal-overlay',
 
         events: {
@@ -83,8 +96,10 @@
         template: _.template('<div class="modal-content-region"></div>'),
 
         events: {
-            'click .js-submit': 'onSubmit',
-            'click .js-reject': 'onReject'
+            'click .js-submit:not(.js-disabled)': 'onSubmit',
+            'click .js-reject': 'onReject',
+            'click .js-next': 'onNext',
+            'click .js-previous': 'onPrevious'
         },
 
         className: function () {
@@ -135,7 +150,9 @@
             this.toggle(value);
         },
 
-        onSubmit: function () {
+        onSubmit: function (event) {
+            var target = event.currentTarget;
+
             var self = this;
             var submitStatus = this.contentRegion.currentView.triggerMethod('submit');
 
@@ -144,9 +161,15 @@
                 return;
             }
 
-            Backbone.$.when(submitStatus).done(function () {
-                self.closeModal();
-            });
+            target.classList.add('disabled', 'js-disabled');
+
+            Backbone.$.when(submitStatus)
+                .done(function () {
+                    self.closeModal();
+                })
+                .fail(function () {
+                    target.classList.remove('disabled', 'js-disabled');
+                });
         },
 
         onReject: function () {
@@ -158,6 +181,37 @@
             }
 
             this.closeModal();
+        },
+
+        onNext: function () {
+            var modalId = this.contentRegion.currentView.triggerMethod('next');
+
+            this._toggleModal(modalId);
+        },
+
+        onPrevious: function () {
+            var modalId = this.contentRegion.currentView.triggerMethod('previous');
+
+            this._toggleModal(modalId);
+        },
+
+        _toggleModal: function (modalId) {
+            // prevent switching modals if methods of child view returns "false"
+            if (modalId === false) {
+                return;
+            }
+
+            var targetModal = this.model.collection.get(modalId);
+
+            if (targetModal === void 0) {
+                throw new Marionette.Error({
+                    message: 'modal dialog with id "' + modalId + '" not found',
+                    name: 'ModalException'
+                });
+            }
+
+            this.model.set('isActive', false);
+            targetModal.set('isActive', true);
         },
 
         closeModal: function () {
