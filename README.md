@@ -1,5 +1,4 @@
-# Marionette.Modal
-
+# Marionette.Modal [![Build Status](https://travis-ci.org/Raidix/Marionette.Modal.svg?branch=master)](https://travis-ci.org/Raidix/Marionette.Modal)
 ## Example
 
 ### HTML
