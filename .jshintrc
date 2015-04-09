@@ -78,6 +78,7 @@
 
     // Custom Globals
     "globals"       : {
+        "define": true,
         "describe": true,
         "it": true
     }
