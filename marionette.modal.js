@@ -7,7 +7,7 @@
     else {
         root.Marionette.Modal = factory(root.Backbone, root._, root.Marionette);
     }
-}.call(this, this, function (Backbone, _, Marionette) {
+}(this, function (Backbone, _, Marionette) {
     'use strict';
 
     // default model
