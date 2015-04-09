@@ -67,7 +67,7 @@
     "dojo"          : false,    // Dojo Toolkit
     "jquery"        : true,     // jQuery
     "mootools"      : false,    // MooTools
-    "node"          : false,    // Node.js
+    "node"          : true,     // Node.js
     "nonstandard"   : false,    // Widely adopted globals (escape, unescape, etc)
     "phantom"       : false,    // PhantomJS runtime environment.
     "prototypejs"   : false,    // Prototype and Scriptaculous
@@ -78,8 +78,8 @@
 
     // Custom Globals
     "globals"       : {
-        "require": true,
-        "define" : true
+        "describe": true,
+        "it": true
     }
 
     // You can now specify different options on a per-directory or even per-file basis.
