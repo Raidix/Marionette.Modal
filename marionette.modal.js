@@ -116,7 +116,8 @@
         modelEvents: {
             'change:isActive': 'onChangeActive',
             'reject': 'onReject',
-            'submit': 'onSubmit'
+            'submit': 'onSubmit',
+            'close': 'closeModal'
         },
 
         regions: {
@@ -152,7 +153,6 @@
 
         onSubmit: function (event) {
             var target = event.currentTarget;
-
             var self = this;
             var submitStatus = this.contentRegion.currentView.triggerMethod('submit');
 
@@ -298,6 +298,16 @@
 
             this.listenTo(EA, 'submit', this.onSubmit);
             this.listenTo(EA, 'reject', this.onReject);
+        },
+        
+        close: function (id) {
+            if (id !== void 0) {
+                var model = this.collection.get(id);
+
+                if (model !== void 0) {
+                    model.trigger('close');
+                }
+            }
         }
     });
 
