@@ -7,7 +7,7 @@
     else {
         root.Marionette.Modal = factory(root.Backbone, root._, root.Marionette);
     }
-}(this, function (Backbone, _, Marionette) {
+}.call(this, this, function (Backbone, _, Marionette) {
     'use strict';
 
     // default model
@@ -75,7 +75,7 @@
         el: '#modal-overlay',
 
         events: {
-            'click': 'onClick'
+            click: 'onClick'
         },
 
         toggle: function (state) {
@@ -115,9 +115,9 @@
 
         modelEvents: {
             'change:isActive': 'onChangeActive',
-            'reject': 'onReject',
-            'submit': 'onSubmit',
-            'close': 'closeModal'
+            reject: 'onReject',
+            submit: 'onSubmit',
+            close: 'closeModal'
         },
 
         regions: {
@@ -299,7 +299,7 @@
             this.listenTo(EA, 'submit', this.onSubmit);
             this.listenTo(EA, 'reject', this.onReject);
         },
-        
+
         close: function (id) {
             if (id !== void 0) {
                 var model = this.collection.get(id);

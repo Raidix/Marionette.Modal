@@ -1,0 +1,31 @@
+{
+  "name": "Marionette.Modal",
+  "description": "Dialog library based on marionette framework",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Raidix/Marionette.Modal",
+  "author": "Roman Nuritdinov <ky6uk.kun@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "jshint *.js && jscs *.js",
+    "travis": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Raidix/Marionette.Modal"
+  },
+  "keywords": [
+    "modal",
+    "dialog",
+    "marionette",
+    "backbone",
+    "wizard"
+  ],
+  "bugs": {
+    "url": "https://github.com/Raidix/Marionette.Modal/issues"
+  },
+  "devDependencies": {
+    "jscs": "^1.12.0",
+    "jshint": "^2.6.3"
+  }
+}
