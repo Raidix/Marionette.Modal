@@ -31,9 +31,9 @@
   "unit-coverage": {
     "main": [
       "--sources",
-      "*.js",
+      "marionette.modal.js",
       "--tests",
-      "test/**/*.js",
+      "test/specs/marionette.modal.js",
       "-S",
       "relative",
       "--set-opt",
