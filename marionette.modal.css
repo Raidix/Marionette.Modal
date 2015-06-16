@@ -1,0 +1,37 @@
+.modal-overlay {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1400;
+  display: none; }
+
+.modal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 80%;
+  bottom: auto;
+  margin: 0 auto;
+  max-width: 960px;
+  background-color: #fff;
+  z-index: 1488;
+  padding: 1.5rem;
+  display: none;
+  opacity: 0; 
+  -webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-o-border-radius: 8px;
+	-ms-border-radius: 8px;
+	border-radius: 8px;
+	-webkit-box-shadow: 0 0 10px #000;
+	-moz-box-shadow: 0 0 10px #000;
+	-o-box-shadow: 0 0 10px #000;
+	-ms-box-shadow: 0 0 10px #000;
+	box-shadow: 0 0 10px #000;
+  
+  }
+
+/*# sourceMappingURL=marionette.modal.css.map */
