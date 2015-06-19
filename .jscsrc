@@ -1,4 +1,4 @@
-// node-jscs v1.12.0
+// node-jscs v1.13.0
 {
     "disallowFunctionDeclarations": true,
     "disallowMixedSpacesAndTabs": true,
@@ -6,6 +6,7 @@
     "disallowMultipleLineStrings": true,
     "disallowMultipleSpaces": true,
     "disallowMultipleVarDecl": "exceptUndefined",
+    "disallowNamedUnassignedFunctions": true,
     "disallowNewlineBeforeBlockStatements": true,
     "disallowOperatorBeforeLineBreak": ["."],
     "disallowPaddingNewlinesBeforeKeywords": ["catch", "else"],
@@ -25,6 +26,7 @@
         "allowUrlComments": true,
         "allowRegex": true
     },
+    "maximumNumberOfLines": 9001,
     "requireAnonymousFunctions": true,
     "requireBlocksOnNewline": 1,
     "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
@@ -39,6 +41,8 @@
     "requireOperatorBeforeLineBreak": true,
     "requirePaddingNewLineAfterVariableDeclaration": true,
     "requirePaddingNewLinesAfterBlocks": true,
+    "requirePaddingNewLinesAfterUseStrict": true,
+    "requirePaddingNewLinesBeforeExport": true,
     "requirePaddingNewlinesBeforeKeywords": [
         "do",
         "for",
@@ -56,11 +60,9 @@
     "requireParenthesesAroundIIFE": true,
     "requireSemicolons": true,
     "requireSpaceAfterBinaryOperators": true,
-    // "requireSpaceAfterKeywords": true,
     "requireSpaceAfterLineComment": true,
     "requireSpaceBeforeBinaryOperators": true,
     "requireSpaceBeforeBlockStatements": true,
-    // "requireSpaceBeforeKeywords": true,
     "requireSpaceBeforeObjectValues": true,
     "requireSpaceBetweenArguments": true,
     "requireSpacesInAnonymousFunctionExpression": {
@@ -73,6 +75,7 @@
     "safeContextKeyword": ["self"],
     "validateIndentation": 4,
     "validateLineBreaks": "LF",
+    // "validateNewlineAfterArrayElements": true, // define([]) bug
     "validateParameterSeparator": ", ",
     "validateQuoteMarks": "'"
 }

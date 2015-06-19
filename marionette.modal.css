@@ -1,0 +1,59 @@
+.mn-modal__item {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 960px;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s;
+}
+
+.mn-modal__item_shown {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mn-modal_effect_slide-top {
+  -webkit-transform: translateY(-30%);
+  transform: translateY(-30%);
+}
+
+.mn-modal_effect_slide-top_shown {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+.mn-modal_effect_fade {
+  -webkit-transform: scale(0.3);
+  transform: scale(0.3);
+}
+
+.mn-modal_effect_fade_shown {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+.mn-modal {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.mn-modal_shown {
+  visibility: visible;
+  opacity: 1;
+}

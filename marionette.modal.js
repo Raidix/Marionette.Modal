@@ -10,6 +10,15 @@
 }.call(this, this, function (Backbone, _, Marionette) {
     'use strict';
 
+    var _settings = {
+        defaultEffect: 'slideTop'
+    };
+
+    var effects = {
+        slideTop: 'mn-modal_effect_slide-top',
+        fade: 'mn-modal_effect_fade'
+    };
+
     // default model
     var ModalModel = Backbone.Model.extend({
         defaults: {
@@ -60,53 +69,42 @@
         },
 
         reactivate: function () {
-            var model = this.last();
+            if ((this.lastActive !== void 0) && (this.get(this.lastActive) !== void 0)) {
+                this.lastActive.set('isActive', true);
 
-            if (model !== void 0) {
-                model.set('isActive', true);
-            }
-        }
-    });
-
-    // overlay
-    var OverlayView = Marionette.ItemView.extend({
-        template: false,
-
-        el: '#modal-overlay',
-
-        events: {
-            click: 'onClick'
-        },
-
-        toggle: function (state) {
-            if (state) {
-                return this.$el.fadeIn(200);
+                return this;
             }
 
-            return this.$el.fadeOut(200);
-        },
+            var last = this.last();
 
-        onClick: function () {
-            this.trigger('click');
+            if (last !== void 0) {
+                last.set('isActive', true);
+            }
         }
     });
 
     // modal
     var ModalView = Marionette.LayoutView.extend({
-        template: _.template('<div class="modal-content-region"></div>'),
+        template: _.template('<div class="js-item-container"></div>'),
 
         events: {
             'click .js-submit:not(.js-disabled)': 'onSubmit',
             'click .js-reject': 'onReject',
-            'click .js-next': 'onNext',
+            'click .js-next:not(.js-disabled)': 'onNext',
             'click .js-previous': 'onPrevious'
         },
 
         className: function () {
-            var _className = 'modal';
+            var defaultClass = _settings.defaultClass;
+            var effect = this.model.get('effect') || _settings.defaultEffect;
+            var _className = 'mn-modal__item ' + effects[effect];
             var className = this.model.get('className');
 
-            if (_.isString(className)) {
+            if (defaultClass) {
+                _className += ' ' + defaultClass;
+            }
+
+            if (className) {
                 _className += ' ' + className;
             }
 
@@ -121,7 +119,7 @@
         },
 
         regions: {
-            contentRegion: '.modal-content-region'
+            contentRegion: '.js-item-container'
         },
 
         onRender: function () {
@@ -132,18 +130,18 @@
         },
 
         toggle: function (state) {
-            var self = this;
-            var offset = Backbone.$(window).scrollTop();
+            var el = this.el;
+
+            var effect = this.model.get('effect') || _settings.defaultEffect;
+            var effectClass = effects[effect] + '_shown';
 
             if (state) {
-                this.$el.show()
-                    .css({ top: offset + 'px', opacity: 0 })
-                    .animate({ top: offset + 100 + 'px', opacity: 1 }, 200, 'linear');
+                _.defer(function () {
+                    el.classList.add('mn-modal__item_shown', effectClass);
+                });
             }
             else {
-                this.$el.animate({ top: offset + 'px', opacity: 0 }, 200, 'linear', function () {
-                    self.$el.hide();
-                });
+                el.classList.remove('mn-modal__item_shown', effectClass);
             }
         },
 
@@ -151,8 +149,7 @@
             this.toggle(value);
         },
 
-        onSubmit: function (event) {
-            var target = event.currentTarget;
+        onSubmit: function () {
             var self = this;
             var submitStatus = this.contentRegion.currentView.triggerMethod('submit');
 
@@ -161,15 +158,9 @@
                 return;
             }
 
-            target.classList.add('disabled', 'js-disabled');
-
-            Backbone.$.when(submitStatus)
-                .done(function () {
-                    self.closeModal();
-                })
-                .fail(function () {
-                    target.classList.remove('disabled', 'js-disabled');
-                });
+            Backbone.$.when(submitStatus).done(function () {
+                self.closeModal();
+            });
         },
 
         onReject: function () {
@@ -184,15 +175,30 @@
         },
 
         onNext: function () {
-            var modalId = this.contentRegion.currentView.triggerMethod('next');
+            var self = this;
+            var nextObject = this.contentRegion.currentView.triggerMethod('next');
 
-            this._toggleModal(modalId);
+            if (nextObject === false) {
+                return;
+            }
+
+            var nextId = nextObject.id;
+            var nextStatus = nextObject.promise;
+
+            if (nextStatus) {
+                Backbone.$.when(nextStatus).done(function () {
+                    self._toggleModal(nextId);
+                });
+            }
+            else {
+                this._toggleModal(nextId);
+            }
         },
 
         onPrevious: function () {
-            var modalId = this.contentRegion.currentView.triggerMethod('previous');
+            var previousId = this.contentRegion.currentView.triggerMethod('previous');
 
-            this._toggleModal(modalId);
+            this._toggleModal(previousId);
         },
 
         _toggleModal: function (modalId) {
@@ -212,32 +218,28 @@
 
             this.model.set('isActive', false);
             targetModal.set('isActive', true);
+            this.model.collection.lastActive = targetModal;
         },
 
         closeModal: function () {
-            var self = this;
-            var offset = Backbone.$(window).scrollTop();
-
-            this.$el.animate({ top: offset + 'px', opacity: 0 }, 200, 'linear', function () {
-                self.model.destroy();
-            });
+            this.el.classList.remove('mn-modal__item_shown');
+            this.model.destroy();
         }
     });
 
     // modal container
     var ModalContainer = Marionette.CollectionView.extend({
-        el: '#modal-container',
+        el: '#mn-modal',
         sort: false,
-        childView: ModalView
+        childView: ModalView,
+
+        toggle: function (state) {
+            return this.el.classList.toggle('mn-modal_shown', state);
+        }
     });
 
     // constructor
     var ModalController = function () {
-        this._settings = {};
-
-        // initialize overlay once
-        this.overlay = (new OverlayView).render();
-
         this.collection = new ModalCollection;
 
         this.container = new ModalContainer({
@@ -246,15 +248,31 @@
 
         this.container.render();
 
-        this.listenTo(this.overlay, 'click', this.onReject);
-        this.listenTo(this.container, 'add:child remove:child', this.toggleOverlay);
+        this.listenTo(this.container, 'add:child remove:child', this.toggleContainer);
     };
 
     // controller methods
     _.extend(ModalController.prototype, Backbone.Events, {
-        add: function (item) {
+        add: function (items) {
+            var self = this;
+
+            if (_.isArray(items)) {
+                items.forEach(function (item) {
+                    self._add(item);
+                });
+            }
+            else {
+                this._add(items);
+            }
+        },
+
+        _add: function (item) {
             if (item.isActive) {
-                this.collection.invoke('set', 'isActive', false);
+                this.collection.lastActive = this.collection.getActive();
+
+                if (this.collection.lastActive !== void 0) {
+                    this.collection.lastActive.set('isActive', false);
+                }
             }
             else if (this.collection.length === 0) {
                 item.isActive = true;
@@ -279,22 +297,22 @@
             }
         },
 
-        toggleOverlay: function () {
-            this.overlay.toggle(this.collection.length > 0);
+        toggleContainer: function () {
+            this.container.toggle(this.collection.length > 0);
         },
 
         configure: function (settings) {
             if (settings.EA) {
                 this._resetEvents(settings.EA);
             }
+
+            _.extend(_settings, settings);
         },
 
         _resetEvents: function (EA) {
-            if (this._settings.EA) {
-                this.stopListening(this._settings.EA);
+            if (_settings.EA) {
+                this.stopListening(_settings.EA);
             }
-
-            this._settings.EA = EA;
 
             this.listenTo(EA, 'submit', this.onSubmit);
             this.listenTo(EA, 'reject', this.onReject);

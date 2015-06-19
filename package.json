@@ -1,14 +1,14 @@
 {
   "name": "Marionette.Modal",
   "description": "Dialog library based on marionette framework",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/Raidix/Marionette.Modal",
   "author": "Roman Nuritdinov <ky6uk.kun@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "lint": "jshint *.js && jscs *.js",
-    "travis": "npm run lint"
+    "start": "grunt",
+    "lint": "grunt lint"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,11 @@
     "url": "https://github.com/Raidix/Marionette.Modal/issues"
   },
   "devDependencies": {
-    "jscs": "^1.12.0",
-    "jshint": "^2.6.3"
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-jscs": "^1.8.0",
+    "grunt-sass": "^1.0.0"
   }
 }

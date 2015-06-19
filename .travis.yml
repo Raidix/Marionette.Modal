@@ -1,8 +1,8 @@
 language: node_js
 
-script: "npm run travis"
+script: "npm run lint"
 
 node_js:
   - "node"
   - "iojs"
-  
+
