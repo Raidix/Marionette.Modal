@@ -1,7 +1,7 @@
 # Marionette.Modal [![Build Status](https://travis-ci.org/Raidix/Marionette.Modal.svg?branch=master)](https://travis-ci.org/Raidix/Marionette.Modal)
 
 ## Supported browsers
-* IE 10+
+* IE 10+ ([with classList polyfill](polyfill.classlist.min.js))
 * Chrome 31+
 * Firefox 31+
 
