@@ -1,36 +1,32 @@
 # Marionette.Modal [![Build Status](https://travis-ci.org/Raidix/Marionette.Modal.svg?branch=master)](https://travis-ci.org/Raidix/Marionette.Modal)
+
+## Supported browsers
+* IE 10+
+* Chrome 31+
+* Firefox 31+
+
 ## Example
 
-### HTML
+### Minimal required markup
 ```html
-<body>
-
-<!-- so much html here -->
-
-<!-- required markup -->
-<div id="modal-container">
-    <div id="modal-overlay" class="modal-overlay"></div>
-</div>
-
-</body>
+<div id="mn-modal" class="mn-modal"></div>
 ```
 
-### JavaScript
 ```javascript
 define(['backbone.marionette', 'marionette.modal'], function (Marionette, Modal) {
     // this is view will rendered inside modal dialog
     var ChildView = Marionette.ItemView.extend({
         template: '#awsum-template',
-        
+
         onSubmit: function () {
             // do submit stuff ...
         },
-        
+
         onReject: function () {
             // do reject stuff ...
         }
     });
-    
+
     // Wow, modal!
     Modal.add({ View: ChildView });
 });

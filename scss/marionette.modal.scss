@@ -11,6 +11,7 @@
     width: $modal-width;
     max-width: $modal-max-width;
     background-color: white;
+    box-sizing: border-box;
     padding: 1.5rem;
     box-shadow: 0 0 10px rgba(#000, 0.25), 0 10px 20px rgba(#000, 0.4);
     transition: all 0.3s;
@@ -23,23 +24,23 @@
 
 // slide up from top
 .mn-modal_effect_slide-top {
-    transform: translateY(-30%);
     -webkit-transform: translateY(-30%);
+    transform: translateY(-30%);
 
     &_shown {
-        transform: translateY(0);
         -webkit-transform: translateY(0);
+        transform: translateY(0);
     }
 }
 
 // fade in
 .mn-modal_effect_fade {
-    transform: scale(0.3);
     -webkit-transform: scale(0.3);
+    transform: scale(0.3);
 
     &_shown {
-        transform: scale(1);
         -webkit-transform: scale(1);
+        transform: scale(1);
     }
 }
 
