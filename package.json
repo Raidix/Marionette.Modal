@@ -1,7 +1,7 @@
 {
   "name": "Marionette.Modal",
   "description": "Dialog library based on marionette framework",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/Raidix/Marionette.Modal",
   "author": "Roman Nuritdinov <ky6uk.kun@gmail.com>",
   "license": "MIT",
@@ -25,7 +25,7 @@
     "url": "https://github.com/Raidix/Marionette.Modal/issues"
   },
   "devDependencies": {
-    "jscs": "^1.12.0",
+    "jscs": "^1.13.0",
     "jshint": "^2.6.3"
   }
 }
