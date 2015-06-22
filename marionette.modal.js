@@ -5,9 +5,9 @@
         define(['backbone', 'underscore', 'marionette'], factory);
     }
     else {
-        root.Marionette.Modal = factory(root.Backbone, root._, root.Marionette);
+        root.Mn.Modal = factory(root.Backbone, root._, root.Mn);
     }
-}.call(this, this, function (Backbone, _, Marionette) {
+}.call(this, this, function (Backbone, _, Mn) {
     'use strict';
 
     var _settings = {
@@ -84,7 +84,7 @@
     });
 
     // modal
-    var ModalView = Marionette.LayoutView.extend({
+    var ModalView = Mn.LayoutView.extend({
         template: _.template('<div class="js-item-container"></div>'),
 
         events: {
@@ -210,7 +210,7 @@
             var targetModal = this.model.collection.get(modalId);
 
             if (targetModal === void 0) {
-                throw new Marionette.Error({
+                throw new Mn.Error({
                     message: 'modal dialog with id "' + modalId + '" not found',
                     name: 'ModalException'
                 });
@@ -228,7 +228,7 @@
     });
 
     // modal container
-    var ModalContainer = Marionette.CollectionView.extend({
+    var ModalContainer = Mn.CollectionView.extend({
         el: '#mn-modal',
         sort: false,
         childView: ModalView,
@@ -329,5 +329,5 @@
         }
     });
 
-    return new ModalController;
+    return ModalController;
 }));
