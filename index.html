@@ -6,11 +6,49 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" type="text/css" href="css/normalize.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700">
+        <link rel="stylesheet" type="text/css" href="css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700">
+        <link rel="stylesheet" type="text/css" href="css/demo.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="marionette.modal.css">
+
+        <script src="https://use.fonticons.com/966203bd.js"></script>
     </head>
 
-    <body>
+    <body class="page">
+
+    <header class="header">
+        <div class="header__title">Marionette.Modal</div>
+        <div class="header__caption">Dialog library based on <a class="link header__link" href="http://marionettejs.com">Marionette</a> framework.</div>
+    </header>
+
+    <section class="content">
+        <div class="heading">Preparing</div>
+
+        <div class="note">
+            <div><i class="icon icon-info"></i> You should import <code class="code">marionette.js</code> before.</div>
+        </div>
+
+        <p>
+            After loading the library you should prepare HTML with minimum markup in any place.
+            <script src="https://gist.github.com/Ky6uk/674d4b3ad053f387dbdd.js"></script>
+        </p>
+
+        <p>
+            And sure you are imported the base styles from <code class="code">marionette.modal.css</code>.
+            <script src="https://gist.github.com/Ky6uk/ccf4e6d8cce1a34eeadb.js"></script>
+        </p>
+
+        <div class="heading">Usage</div>
+    </section>
+
+    <div id="mn-modal" class="mn-modal"></div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.1/backbone-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.4.2/backbone.marionette.min.js"></script>
+    <script src="marionette.modal.js"></script>
+    <script src="demo.js"></script>
 
     <script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');

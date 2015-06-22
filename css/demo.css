@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+.page {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.9rem;
+}
+
+.header {
+    height: 10rem;
+    width: 100%;
+    background-color: #239EC1;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__title {
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.header__link {
+    color: cornsilk;
+    text-decoration: none;
+}
+.header__link:hover {
+    color: ivory;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 42em) {
+    .header {
+        height: 8rem;
+    }
+
+    .header__title {
+        font-size: 1.9rem;
+    }
+
+    .header__caption {
+        font-size: 0.8rem;
+    }
+}
+
+.content {
+    margin: 20px auto;
+    padding: 0 0.5rem;
+}
+
+@media screen and (min-width: 64rem) {
+    .content {
+        width: 64rem;
+    }
+}
+
+.code {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    font-size: 85%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.code:before, .code:after {
+    letter-spacing: -0.2em;
+    content: "\00a0";
+}
+
+.note {
+    display: flex;
+    align-items: center;
+    border: 1px solid #FBF4E3;
+    height: 3rem;
+    background-color: #FFFFF9;
+    padding: 0 10px;
+}
+
+@media screen and (max-width: 42em) {
+    .note {
+        font-size: 0.8rem;
+    }
+}
+
+.icon {
+    color: cornflowerblue;
+}
+
+.heading {
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 1rem 0;
+}
