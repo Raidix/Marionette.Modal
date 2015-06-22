@@ -11,6 +11,7 @@
 ```html
 <div id="mn-modal" class="mn-modal"></div>
 ```
+### Code sample
 
 ```javascript
 define(['backbone.marionette', 'marionette.modal'], function (Marionette, Modal) {
