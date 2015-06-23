@@ -7,6 +7,16 @@
     font-size: 0.9rem;
 }
 
+.link {
+    cursor: pointer;
+    color: blue;
+}
+
+.link:hover {
+    color: lightblue;
+    text-decoration: underline;
+}
+
 .header {
     height: 10rem;
     width: 100%;
@@ -32,29 +42,10 @@
     text-decoration: underline;
 }
 
-@media screen and (max-width: 42em) {
-    .header {
-        height: 8rem;
-    }
-
-    .header__title {
-        font-size: 1.9rem;
-    }
-
-    .header__caption {
-        font-size: 0.8rem;
-    }
-}
-
 .content {
     margin: 20px auto;
     padding: 0 0.5rem;
-}
-
-@media screen and (min-width: 64rem) {
-    .content {
-        width: 64rem;
-    }
+    width: 64rem;
 }
 
 .code {
@@ -80,18 +71,47 @@
     padding: 0 10px;
 }
 
-@media screen and (max-width: 42em) {
-    .note {
-        font-size: 0.8rem;
-    }
-}
+.icon {}
 
-.icon {
+.icon_info {
     color: cornflowerblue;
 }
 
+.icon_close {
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
 .heading {
-    font-size: 1.2rem;
     font-weight: 400;
     padding: 1rem 0;
+}
+
+.heading_h1 {
+    font-weight: 600;
+    font-size: 1.7rem;
+}
+
+.heading_h2 {
+    font-size: 1.4rem;
+    padding-bottom: 0.5rem;
+}
+
+.heading_h3 {
+    font-size: 1.1rem;
+    padding-bottom: 0;
+    color: #0077BF;
+}
+
+button {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    background: transparent;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.4);
 }

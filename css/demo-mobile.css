@@ -1,0 +1,19 @@
+.header {
+    height: 8rem;
+}
+
+.header__title {
+    font-size: 1.9rem;
+}
+
+.header__caption {
+    font-size: 0.8rem;
+}
+
+.content {
+    width: auto;
+}
+
+.note {
+    font-size: 0.8rem;
+}

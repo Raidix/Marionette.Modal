@@ -8,7 +8,8 @@
 
         <link rel="stylesheet" type="text/css" href="css/normalize.css">
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700">
-        <link rel="stylesheet" type="text/css" href="css/demo.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="css/demo.css">
+        <link rel="stylesheet" type="text/css" href="css/demo-mobile.css" media="(max-width: 42em)">
         <link rel="stylesheet" type="text/css" href="marionette.modal.css">
 
         <script src="https://use.fonticons.com/966203bd.js"></script>
@@ -22,10 +23,12 @@
     </header>
 
     <section class="content">
-        <div class="heading">Preparing</div>
+        <div class="heading heading_h1">Ideas</div>
+
+        <div class="heading heading_h1">Usage</div>
 
         <div class="note">
-            <div><i class="icon icon-info"></i> You should import <code class="code">marionette.js</code> before.</div>
+            <div><i class="icon icon-info icon_info"></i> You should import <code class="code">marionette.js</code> before.</div>
         </div>
 
         <p>
@@ -38,7 +41,59 @@
             <script src="https://gist.github.com/Ky6uk/ccf4e6d8cce1a34eeadb.js"></script>
         </p>
 
-        <div class="heading">Usage</div>
+        <p>
+            Next you should create one of modals controller instance by <code class="code">new Mn.Modal</code> and use it.
+        </p>
+
+        <div class="heading heading_h1">Controller methods</div>
+
+        <div class="heading heading_h2">Mn.Modal.prototype.add</div>
+
+        <p>
+            This method take only one argument like a <code class="code">Backbone.Collection</code>. <code class="code">Object</code> or <code class="code">Array</code>. Each <code class="code">Object</code> can contain some following parameters:
+
+            <script src="https://gist.github.com/Ky6uk/1146007e65c3855327db.js"></script>
+        </p>
+
+        <div class="heading heading_h3">View</div>
+
+        <p>
+            <div>Any valid Backbone or Marionette view class.</div>
+            <div>Will create a new instance of that <code class="code">View</code> after adding. The instance will inserted into a new modal window.</div>
+        </p>
+
+        <div class="heading heading_h3">isActive</div>
+
+        <p>
+            <div>Initial activity flag.</div>
+            <div>If <code class="code">true</code> &mdash; will show immediately and tries to hide current active window.</div>
+            <div>If <code class="code">false</code> &mdash; will show only if no other active windows are shown. Otherwise will rendered on background.</div>
+        </p>
+
+        <div class="heading heading_h3">group</div>
+
+        <p>
+            <div>Specify group name of modal window. It allow using some addition logic:</div>
+
+            <ul>
+                <li>If any window of group will close, then all windows in this group will close;
+                <li>You can navigate through windows into group (see below <code class="code">onNext</code>, <code class="code">onPrevious</code>).
+            </ul>
+        </p>
+
+        <div class="heading heading_h3">effect</div>
+
+        <p>
+            <div>Show/hide animation effect name. Possible values:</div>
+
+            <ul>
+                <li><code class="code">slideTop</code> (<a class="link js-test" data-name="slideTop">test&hellip;</a>)
+                <li><code class="code">fade</code> (<a class="link js-test" data-name="fade">test&hellip;</a>)
+            </ul>
+        </p>
+
+        <div class="heading heading_h3">TBD...</div>
+        <p>TBD...</p>
     </section>
 
     <div id="mn-modal" class="mn-modal"></div>
