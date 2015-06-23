@@ -4,7 +4,7 @@ var modal = new Mn.Modal;
 var baseTemplate = _.template(
     '<i class="icon icon-lg icon-times icon_close js-reject"></i>' +
     '<div class="demo-content"><%=content%></div>' +
-    '<button class="button js-reject">Reject</button>'
+    '<button class="button js-reject">Close</button>'
 );
 
 var content = '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod' +
