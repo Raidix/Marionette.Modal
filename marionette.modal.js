@@ -1,8 +1,15 @@
 (function (root, factory) {
-    'use strict';
 
     if (typeof define === 'function' && define.amd) {
-        define(['backbone', 'underscore', 'marionette'], factory);
+        define(['backbone', 'underscore', 'marionette'], function (Backbone, _, Marionette) {
+            return factory(Backbone, _, Marionette);
+        });
+    }
+    else if (typeof exports !== 'undefined') {
+        var Backbone = require('backbone');
+        var _ = require('underscore');
+        var Marionette = require('marionette');
+        module.exports = factory(Backbone, _, Marionette);
     }
     else {
         root.Marionette.Modal = factory(root.Backbone, root._, root.Marionette);
