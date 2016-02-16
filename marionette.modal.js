@@ -8,7 +8,7 @@
         var Backbone = require('backbone');
         var _ = require('underscore');
         var Marionette = require('marionette');
-        
+
         module.exports = factory(Backbone, _, Marionette);
     }
     else {
