@@ -79,7 +79,8 @@
     // Custom Globals
     "globals"       : {
         "require": true,
-        "define" : true
+        "define" : true,
+        "module" : true
     }
 
     // You can now specify different options on a per-directory or even per-file basis.
